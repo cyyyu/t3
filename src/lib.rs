@@ -46,7 +46,7 @@ impl App {
             for c in keys {
                 match c.unwrap() {
                     // Exit.
-                    Key::Char('q') => {
+                    Key::Char('q') | Key::Esc => {
                         tx.send(()).unwrap();
                         break;
                     }
