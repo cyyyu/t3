@@ -66,7 +66,7 @@ impl App {
                 Err(TryRecvError::Empty) => {}
             }
 
-            self.canvas.clear_screen();
+            self.canvas.hide_cursor();
 
             let (canvas_col, canvas_row) = canvas::Canvas::get_size();
             let sphere = self.scene.geometries.first().unwrap();

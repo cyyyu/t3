@@ -19,12 +19,17 @@ impl Canvas {
         term::get_size()
     }
 
-    pub fn clear_screen(&mut self) {
+    pub fn clear_canvas(&mut self) {
         let stdout = self.get_stdout();
         term::clear_screen(stdout);
         term::goto(stdout, 1, 1);
         term::hide_cursor(stdout);
         self.flush();
+    }
+
+    pub fn hide_cursor(&mut self) {
+        let stdout = self.get_stdout();
+        term::hide_cursor(stdout);
     }
 
     pub fn dispose(&mut self) {
