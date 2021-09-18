@@ -6,3 +6,16 @@ where
 {
     range.0 + (range.1 - range.0) * (value - domain.0) / (domain.1 - domain.0)
 }
+
+pub fn clamp<T>(value: T, min: T, max: T) -> T
+where
+    T: std::cmp::PartialOrd + Copy,
+{
+    if value > max {
+        max
+    } else if value < min {
+        min
+    } else {
+        value
+    }
+}

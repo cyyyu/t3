@@ -17,7 +17,7 @@ impl Color {
         } else if self.r >= 0.35 {
             '░'
         } else if self.r >= 0.25 {
-            '▄'
+            '#'
         } else if self.r >= 0.1 {
             '='
         } else {

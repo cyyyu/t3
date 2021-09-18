@@ -4,7 +4,7 @@ use t3::math::Vec3;
 fn main() {
     let mut app = t3::App::new();
 
-    let sphere: Sphere = Sphere::new(10.0, Vec3::new(0.0, 0.0, 0.0));
+    let sphere: Sphere = Sphere::new(6.5, Vec3::new(0.0, 0.0, 0.0));
     let light = t3::light::Light::new(Vec3::new(30.0, 80.0, 0.0));
 
     app.scene.add_geometry(sphere);
@@ -15,9 +15,9 @@ fn main() {
         let light = &mut lights[0];
         let light_pos = light.get_pos();
         light.set_pos(Vec3::new(
-            30.0 * (time as f32 / 1000.0).sin(),
+            20.0 * (time as f32 / 1000.0).sin(),
             light_pos.y,
-            30.0 * (time as f32 / 1000.0).cos(),
+            20.0 * (time as f32 / 1000.0).cos(),
         ));
     });
 }

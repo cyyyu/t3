@@ -99,7 +99,7 @@ impl App {
                         };
 
                         // ambient
-                        color += 0.5;
+                        color += 0.1;
 
                         // diffuse
                         let light = self.scene.lights.first().unwrap();
@@ -107,7 +107,7 @@ impl App {
                         let p_nor = (hit_point - sphere.origin).normalize();
                         let angle = p_nor.dot((*light_pos - p_nor).normalize());
                         color += if angle >= 0.0 {
-                            util::remap(angle, (0.0, 1.0), (0.0, 0.5))
+                            util::remap(util::clamp(angle, 0.0, 1.0), (0.0, 1.0), (0.0, 0.6))
                         } else {
                             0.0
                         };
@@ -122,7 +122,7 @@ impl App {
 
             self.canvas.flush();
 
-            thread::sleep(Duration::from_millis(200));
+            thread::sleep(Duration::from_millis(10));
 
             f(self, timer.elapsed().as_millis());
         }
