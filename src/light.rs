@@ -7,8 +7,8 @@ impl Light {
         Light(pos)
     }
 
-    pub fn get_pos(&self) -> &Vec3 {
-        &self.0
+    pub fn get_pos(&self) -> Vec3 {
+        self.0.clone()
     }
 
     pub fn set_pos(&mut self, pos: Vec3) {

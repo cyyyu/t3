@@ -105,7 +105,7 @@ impl App {
                         let light = self.scene.lights.first().unwrap();
                         let light_pos = light.get_pos();
                         let p_nor = (hit_point - sphere.origin).normalize();
-                        let angle = p_nor.dot((*light_pos - p_nor).normalize());
+                        let angle = p_nor.dot((light_pos - p_nor).normalize());
                         color += if angle >= 0.0 {
                             util::remap(util::clamp(angle, 0.0, 1.0), (0.0, 1.0), (0.0, 0.6))
                         } else {
