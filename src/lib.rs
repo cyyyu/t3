@@ -91,32 +91,14 @@ impl App {
                         Vec3::new(x, y, -1.0).normalize()
                     });
 
-                    if let Some(hit_point) = sphere.hit(r) {
-                        let mut color = color::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                        };
-
-                        // ambient
-                        color += 0.1;
-
-                        // diffuse
-                        let light = self.scene.lights.first().unwrap();
-                        let light_pos = light.get_pos();
-                        let p_nor = (hit_point - sphere.origin).normalize();
-                        let angle = p_nor.dot((light_pos - p_nor).normalize());
-                        color += if angle >= 0.0 {
-                            util::remap(util::clamp(angle, 0.0, 1.0), (0.0, 1.0), (0.0, 0.6))
-                        } else {
-                            0.0
-                        };
-
-                        // todo: specular
-                        self.canvas.write(i, j, color.get_char());
-                    } else {
-                        self.canvas.write(i, j, ' ')
-                    }
+                    let mut color = color::Color {
+                        r: 0.0,
+                        g: 0.0,
+                        b: 0.0,
+                    };
+                    let contribution = sphere.hit(r, &self.scene);
+                    color += contribution;
+                    self.canvas.write(i, j, color.get_char());
                 }
             }
 

@@ -20,8 +20,10 @@ impl Color {
             '#'
         } else if self.r >= 0.1 {
             '='
+        } else if self.r > 0.0 {
+            '.'
         } else {
-            '-'
+            ' '
         }
     }
 }
