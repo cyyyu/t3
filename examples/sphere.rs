@@ -6,8 +6,8 @@ fn main() {
     let mut app = t3::App::new();
 
     app.scene
-        .add_geometry(Sphere::new(6.5, Vec3::new(0.0, 0.0, 0.0)));
-    app.scene.add_light(Light::new(Vec3::new(30.0, 80.0, 0.0)));
+        .add_geometry(Sphere::new(8.5, Vec3::new(0.0, 0.0, 0.0)));
+    app.scene.add_light(Light::new(Vec3::new(30.0, 40.0, 0.0)));
 
     app.render(|app, time| {
         let lights = &mut app.scene.lights;

@@ -41,20 +41,25 @@ impl Sphere {
             let hit_point =
                 p - ray_direction * (sphere_radius.powi(2) - len_to_sphere_origin.powi(2)).sqrt();
 
+            // todo: take care of all lights
+            let light = scene.lights.first().unwrap();
+            let light_pos = light.get_pos();
+
             // ambient
             contribution += 0.1;
 
             // diffuse
-            let light = scene.lights.first().unwrap();
-            let light_pos = light.get_pos();
-            let p_nor = (hit_point - self.origin).normalize();
-            let angle = p_nor.dot((light_pos - p_nor).normalize());
-            contribution += if angle >= 0.0 {
-                util::remap(util::clamp(angle, 0.0, 1.0), (0.0, 1.0), (0.0, 0.6))
-            } else {
-                0.0
-            };
-            // todo: specular
+            let p_nor = (hit_point - sphere_origin).normalize();
+            let mut angle = p_nor.dot((light_pos - p_nor).normalize());
+            angle = util::clamp(angle, 0.0, 1.0);
+            contribution += util::remap(util::clamp(angle, 0.0, 1.0), (0.0, 1.0), (0.0, 0.6));
+
+            // specular
+            let light_reflection = util::reflection(hit_point - light_pos, p_nor).normalize();
+            let mut x = (-ray_direction).dot(light_reflection);
+            x = util::clamp(x, 0.0, 1.0);
+            let strength = 0.4;
+            contribution += strength * x.powi(32);
         }
 
         contribution
