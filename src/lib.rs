@@ -91,7 +91,7 @@ impl App {
                         Vec3::new(x, y, -1.0).normalize()
                     });
 
-                    if let Some(hit_point) = r.hit(sphere) {
+                    if let Some(hit_point) = sphere.hit(r) {
                         let mut color = color::Color {
                             r: 0.0,
                             g: 0.0,
