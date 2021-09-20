@@ -69,6 +69,8 @@ impl App {
             self.canvas.hide_cursor();
 
             let (canvas_col, canvas_row) = canvas::Canvas::get_size();
+
+            // todo: take care of all geometries
             let sphere = self.scene.geometries.first().unwrap();
 
             for j in 1..=canvas_row {
