@@ -70,9 +70,6 @@ impl App {
 
             let (canvas_col, canvas_row) = canvas::Canvas::get_size();
 
-            // todo: take care of all geometries
-            let sphere = self.scene.geometries.first().unwrap();
-
             for j in 1..=canvas_row {
                 for i in 1..=canvas_col {
                     // build ray
@@ -98,8 +95,14 @@ impl App {
                         g: 0.0,
                         b: 0.0,
                     };
-                    let contribution = sphere.hit(r, &self.scene);
-                    color += contribution;
+
+                    self.scene.spheres.iter().for_each(|sphere| {
+                        color += sphere.hit(r, &self.scene);
+                    });
+                    self.scene.cubes.iter().for_each(|cube| {
+                        color += cube.hit(r, &self.scene);
+                    });
+
                     self.canvas.write(i, j, color.get_char());
                 }
             }

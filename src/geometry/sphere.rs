@@ -1,10 +1,5 @@
-use glam::Vec3;
-
 use crate::{ray::Ray, scene::Scene, util};
-
-pub trait Geometry {
-    fn new() -> Self;
-}
+use glam::Vec3;
 
 pub struct Sphere {
     pub radius: f32,

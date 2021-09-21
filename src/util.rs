@@ -25,3 +25,14 @@ where
         value
     }
 }
+
+pub fn max<T>(a: T, b: T) -> T
+where
+    T: PartialOrd,
+{
+    if a > b {
+        a
+    } else {
+        b
+    }
+}
