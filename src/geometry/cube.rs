@@ -100,7 +100,7 @@ impl Cube {
         let mut dist;
         let epsilon = 0.5;
 
-        let step = 30_usize;
+        let step = 20_usize;
         for _ in 0..step {
             p = (ray_origin + ray_direction * d0) - cube_origin;
             dist = {
