@@ -1,8 +1,10 @@
+use crate::color::Color;
 use crate::term;
 use crate::term::Term;
 use std::io::stdout;
 use std::io::Stdout;
 use std::io::Write;
+use termion::color;
 use termion::cursor;
 use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
@@ -12,7 +14,9 @@ pub struct Canvas(pub AlternateScreen<RawTerminal<Stdout>>);
 
 impl Canvas {
     pub fn new() -> Self {
-        Canvas(AlternateScreen::from(stdout().into_raw_mode().unwrap()))
+        Canvas(AlternateScreen::from(
+            stdout().into_raw_mode().unwrap(),
+        ))
     }
 
     pub fn get_size() -> (u16, u16) {
@@ -41,6 +45,24 @@ impl Canvas {
     pub fn write(&mut self, i: u16, j: u16, c: char) {
         let stdout = self.get_stdout();
         write!(stdout, "{}{}", cursor::Goto(i, j), c).unwrap();
+    }
+
+    pub fn write_with_bg(&mut self, i: u16, j: u16, c: Color) {
+        let stdout = self.get_stdout();
+        let char = c.get_char();
+        write!(
+            stdout,
+            "{}{}{}",
+            cursor::Goto(i, j),
+            {
+                let bg = c.rgb();
+                color::Bg(color::Rgb(
+                    bg.r as u8, bg.g as u8, bg.b as u8,
+                ))
+            },
+            char
+        )
+        .unwrap();
     }
 
     pub fn flush(&mut self) {

@@ -1,5 +1,7 @@
 use std::{ops::Add, ops::AddAssign};
 
+/* [0.0, 1.0] range color */
+#[derive(Clone, Copy)]
 pub struct Color {
     pub r: f32,
     pub g: f32,
@@ -7,20 +9,39 @@ pub struct Color {
 }
 
 impl Color {
+    pub fn grayscale(&self) -> Self {
+        let avg = (self.r + self.g + self.b) / 3.0;
+        Color {
+            r: avg,
+            g: avg,
+            b: avg,
+        }
+    }
+
+    // return 0-255 rgb color
+    pub fn rgb(&self) -> Self {
+        Color {
+            r: self.r * 255.0,
+            g: self.g * 255.0,
+            b: self.b * 255.0,
+        }
+    }
+
     pub fn get_char(&self) -> char {
-        if self.r >= 0.9 {
+        let p = self.r * 0.299 + self.g * 0.587 + self.b * 0.114;
+        if p >= 0.9 {
             '█'
-        } else if self.r >= 0.75 {
+        } else if p >= 0.75 {
             '▓'
-        } else if self.r >= 0.55 {
+        } else if p >= 0.55 {
             '▒'
-        } else if self.r >= 0.35 {
-            '░'
-        } else if self.r >= 0.25 {
+        } else if p >= 0.35 {
             '¤'
-        } else if self.r >= 0.1 {
+        } else if p >= 0.25 {
+            '░'
+        } else if p >= 0.1 {
             '°'
-        } else if self.r > 0.0 {
+        } else if p > 0.0 {
             '.'
         } else {
             ' '

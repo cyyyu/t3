@@ -103,7 +103,7 @@ impl App {
                         color += cube.hit(r, &self.scene);
                     });
 
-                    self.canvas.write(i, j, color.get_char());
+                    self.canvas.write_with_bg(i, j, color);
                 }
             }
 
