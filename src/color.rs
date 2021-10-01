@@ -9,6 +9,10 @@ pub struct Color {
 }
 
 impl Color {
+    pub fn new(r: f32, g: f32, b: f32) -> Color {
+        Color { r, g, b }
+    }
+
     pub fn grayscale(&self) -> Self {
         let avg = (self.r + self.g + self.b) / 3.0;
         Color {
@@ -64,6 +68,25 @@ impl Add<f32> for Color {
             r: self.r + n,
             g: self.g + n,
             b: self.b + n,
+        }
+    }
+}
+
+impl AddAssign<Color> for Color {
+    fn add_assign(&mut self, rhs: Color) {
+        self.r += rhs.r;
+        self.g += rhs.g;
+        self.b += rhs.b;
+    }
+}
+
+impl Add<Color> for Color {
+    type Output = Color;
+    fn add(self, n: Color) -> Color {
+        Color {
+            r: self.r + n.r,
+            g: self.g + n.g,
+            b: self.b + n.b,
         }
     }
 }
