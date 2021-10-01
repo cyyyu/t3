@@ -96,12 +96,7 @@ impl App {
                         b: 0.0,
                     };
 
-                    self.scene.spheres.iter().for_each(|sphere| {
-                        color += sphere.hit(r, &self.scene);
-                    });
-                    self.scene.cubes.iter().for_each(|cube| {
-                        color += cube.hit(r, &self.scene);
-                    });
+                    self.scene.intersect(&r, &mut color);
 
                     self.canvas.write_with_bg(i, j, color);
                 }
