@@ -1,3 +1,4 @@
+use crate::color::Color;
 use crate::{ray::Ray, scene::Scene, util};
 use glam::Vec3;
 
@@ -33,17 +34,17 @@ impl Cube {
         self.origin = pos;
     }
 
-    pub fn hit(&self, r: Ray, scene: &Scene) -> f32 {
+    pub fn intersect(&self, r: Ray, scene: &Scene) -> (Color, Vec3) {
         let dist = self.ray_matching(r);
 
-        let mut contribution = 0.0;
+        let mut output = Color::new(0.0, 0.0, 0.0);
 
         if dist > MAX_DIST {
-            return contribution;
+            return (output, Vec3::new(MAX_DIST, MAX_DIST, MAX_DIST));
         }
 
         // ambient
-        contribution += 0.05;
+        output += 0.05;
 
         // diffuse
         let hit_point = r.origin + r.direction * dist;
@@ -66,7 +67,7 @@ impl Cube {
         };
         let mut angle = nor.dot((light_pos - hit_point).normalize());
         angle = util::clamp(angle, 0.0, 1.0);
-        contribution += util::remap(
+        output += util::remap(
             util::clamp(angle, 0.0, 1.0),
             (0.0, 1.0),
             (0.0, 0.6),
@@ -78,9 +79,9 @@ impl Cube {
         let mut x = (-r.direction).dot(light_reflection);
         x = util::clamp(x, 0.0, 1.0);
         let strength = 0.4;
-        contribution += strength * x.powi(32);
+        output += strength * x.powi(32);
 
-        contribution
+        (output, hit_point)
     }
 
     fn ray_matching(&self, r: Ray) -> f32 {
