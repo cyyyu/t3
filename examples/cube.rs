@@ -6,9 +6,9 @@ fn main() {
     let mut app = t3::App::new();
 
     app.scene.add_cube(Cube::new(
-        8.0,
-        8.0,
-        8.0,
+        10.0,
+        10.0,
+        10.0,
         Vec3::new(-8.0, -10.0, -10.0),
     ));
     app.scene
