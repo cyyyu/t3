@@ -6,6 +6,8 @@ A terminal 3d renderer made for fun.
 
 `$ cargo run --examples sphere`
 
+Press `q` to exit.
+
 <img src="./screenshots/demo1.gif" width="650" />
 
 ## License
